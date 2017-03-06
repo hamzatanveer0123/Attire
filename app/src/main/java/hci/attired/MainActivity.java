@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         final AutoCompleteTextView search = (AutoCompleteTextView) findViewById(R.id.shoppingList);
         search.setAdapter(adapter);
 
-        Button searchBtn = (Button) findViewById(R.id.searchBtn);
+        final Button searchBtn = (Button) findViewById(R.id.searchBtn);
 
         searchBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -103,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 search.showDropDown();
+            }
+        });
+
+        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchBtn.setVisibility(View.VISIBLE);
             }
         });
 
