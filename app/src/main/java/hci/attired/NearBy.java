@@ -85,7 +85,7 @@ public class NearBy extends AppCompatActivity {
         setContentView(R.layout.activity_near_by);
 
         //Set store_ids
-        store_ids.put("00:07:80:C7:AF:7C","topshop");
+        store_ids.put("00:07:80:C7:AF:7C","Zara");
 //        store_ids.put("00:07:80:C7:AF:7C","topshop");
 
 
@@ -367,7 +367,7 @@ public class NearBy extends AppCompatActivity {
                 }
 
                 if(name.compareTo(this.item) == 0) {
-                    Item data = new Item(i, name, amount, url, "Size: " + sSize + "\nPrice: " + amount);
+                    Item data = new Item(i, name, amount, url, "Size: " + sSize + "\nPrice: " + amount + "\nShop: "+shop_name);
                     list.add(data);
                 }
             }
