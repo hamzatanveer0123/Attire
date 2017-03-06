@@ -29,10 +29,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -49,6 +51,15 @@ public class NearBy extends AppCompatActivity {
     private List<Item> list;
 
     private String item;
+
+    //list of store id's
+    private HashMap<String,String> store_ids = new HashMap<String,String>();
+    int count=0;
+
+    //list of beacon_ids
+    private ArrayList<String> beacon_ids = new ArrayList<String>();
+
+
 
     //ble
     private BluetoothAdapter bleDev = null;
@@ -72,6 +83,10 @@ public class NearBy extends AppCompatActivity {
         // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.statsbar));
         setContentView(R.layout.activity_near_by);
+
+        //Set store_ids
+        store_ids.put("00:07:80:C7:AF:7C","topshop");
+//        store_ids.put("00:07:80:C7:AF:7C","topshop");
 
 
         //=========================================================BLE======================================
@@ -117,21 +132,12 @@ public class NearBy extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         list         = new ArrayList<>();
 
-        try {
-            parseXMLFile();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         adapter = new CustomAdapter(this, list);
         recyclerView.setAdapter(adapter);
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
@@ -157,12 +163,16 @@ public class NearBy extends AppCompatActivity {
         if(scanner != null && isScanning) {
             Toast.makeText(this, "Stopping BLE scan...", Toast.LENGTH_SHORT).show();
             isScanning = false;
+            beacon_ids.clear(); //clear all data retreived from beacons as user may be in a different location when restarting app
             Log.i(TAG, "Scan stopped");
             scanner.stopScan(bleScanCallback);
         }
     }
 
-
+    private void updateRecyclerView(){
+        adapter.notifyItemInserted(list.size() - 1);
+        adapter.notifyDataSetChanged();
+    }
 
 
     // class implementing BleScanner callbacks
@@ -185,6 +195,29 @@ public class NearBy extends AppCompatActivity {
                         String address = dev.getAddress();
                         Log.d(TAG,"Name of the BLE!!!!!! --> "+ name);
                         Log.d(TAG,"Address of the BLE!!!!!! --> "+ address);
+
+                        if (!beacon_ids.contains(address)){
+                            beacon_ids.add(address);
+                            if (store_ids.containsKey(address)) {
+                            try{
+                                parseXMLFile(store_ids.get(address));
+                                updateRecyclerView();
+                            }catch (XmlPullParserException e){
+                                e.printStackTrace();
+                            }catch (FileNotFoundException e){
+                                e.printStackTrace();
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                            }
+                        }
+
+
+
+                        count++;
+                        for (int i=0; i<beacon_ids.size(); i++){
+                            Log.d(TAG,beacon_ids.get(i)+" -- "+count);
+                        }
 //                        scanAdapter.update(dev, address, name == null ? address.toString(): name, rssi);
                     }
 
@@ -275,10 +308,10 @@ public class NearBy extends AppCompatActivity {
 
 
 
-    private void parseXMLFile() throws XmlPullParserException, IOException {
+    private void parseXMLFile(String shop_name) throws XmlPullParserException, IOException {
 
         try {
-            InputStream is = getAssets().open("zara.xml");
+            InputStream is = getAssets().open(shop_name+".xml");
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
