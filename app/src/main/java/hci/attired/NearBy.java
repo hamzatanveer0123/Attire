@@ -2,10 +2,14 @@ package hci.attired;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,14 +41,19 @@ public class NearBy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.statsbar));
         setContentView(R.layout.activity_near_by);
 
         SharedPreferences prefs = getSharedPreferences(ATTIRE_STORAGE, MODE_PRIVATE);
         item = prefs.getString("item1", "");
-
-        TextView textView = (TextView) findViewById(R.id.nearByTitle);
-        textView.setText("Near by " + item);
-
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         list         = new ArrayList<>();
@@ -64,6 +73,16 @@ public class NearBy extends AppCompatActivity {
 
         adapter = new CustomAdapter(this, list);
         recyclerView.setAdapter(adapter);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     private void parseXMLFile() throws XmlPullParserException, IOException {

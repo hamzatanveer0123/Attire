@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,14 +44,13 @@ public class MainActivity extends AppCompatActivity {
         final AutoCompleteTextView search = (AutoCompleteTextView) findViewById(R.id.shoppingList);
         search.setAdapter(adapter);
 
-        Button searchBtn = (Button) findViewById(R.id.searchBtn);
+        final Button searchBtn = (Button) findViewById(R.id.searchBtn);
 
         searchBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
                 String selected = search.getText().toString();
-                Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
 
                 SharedPreferences.Editor editor = getSharedPreferences(ATTIRE_STORAGE, MODE_PRIVATE).edit();
                 editor.putString("item1", selected);
@@ -64,12 +63,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         search.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 search.showDropDown();
+            }
+        });
+
+        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> av, View view, int position, long l) {
+                searchBtn.setVisibility(View.VISIBLE);
             }
         });
 
