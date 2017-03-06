@@ -11,32 +11,22 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BluetoothAdapter bleDev = null;
     private BluetoothLeScanner scanner = null;
-//    private ScanResultArrayAdapter scanAdapter = null;
+    //    private ScanResultArrayAdapter scanAdapter = null;
     private Handler graphHandler = null;
     private Button toggleScan = null;
 
@@ -87,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         final AutoCompleteTextView search = (AutoCompleteTextView) findViewById(R.id.shoppingList);
         search.setAdapter(adapter);
 
-        final Button searchBtn = (Button) findViewById(R.id.searchBtn);
+        Button searchBtn = (Button) findViewById(R.id.searchBtn);
 
         searchBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -393,13 +383,4 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
-        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> av, View view, int position, long l) {
-                searchBtn.setVisibility(View.VISIBLE);
-            }
-        });
-
-    }
 }
