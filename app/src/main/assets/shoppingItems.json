@@ -1,0 +1,288 @@
+{
+  "shops": {
+    "Zara": {
+      "Item001": {
+        "Item": "Jeans",
+        "Price": "£29.99",
+        "Image": "http://static.zara.net/photos///2016/I/0/1/p/9863/241/400/2/w/560/9863241400_6_1_1.jpg?ts=1472212721098",
+        "Size": "32W30L",
+        "Sex": "M"
+      },
+      "Item002": {
+        "Item": "Jeans",
+        "Price": "£19.99",
+        "Image": "http://3.bp.blogspot.com/-kKERMNttOds/UKMDn5DDTXI/AAAAAAAAPR4/eRVOvMstq4k/s1600/16+zara+basic+(1).jpg",
+        "Size": "30W30L",
+        "Sex": "M"
+      },
+      "Item003": {
+        "Item": "Jeans",
+        "Price": "£23.99",
+        "Image": "http://static.zara.net/photos///2016/I/0/1/p/8246/243/400/2/w/1024/8246243400_1_1_1.jpg?ts=1469803852821",
+        "Size": "2",
+        "Sex": "F"
+      },
+      "Item004": {
+        "Item": "Jeans",
+        "Price": "19.99",
+        "Image": "http://coolspotters.com/files/photos/922719/zara-skinny-jeans-profile.jpg",
+        "Size": "4",
+        "Sex": "F"
+      },
+      "Item005": {
+        "Item": "Jacket",
+        "Price": "£64.99",
+        "Image": "http://static.zara.net/photos///2017/V/0/2/p/5475/450/800/2/w/560/5475450800_2_6_1.jpg?ts=1486377169155",
+        "Size": "S",
+        "Sex": "M"
+      },
+      "Item006": {
+        "Item": "Jacket",
+        "Price": "£75.99",
+        "Image": "http://static.zara.net/photos///2017/V/0/2/p/4341/448/800/2/w/560/4341448800_2_1_1.jpg?ts=1487956742222",
+        "Size": "M",
+        "Sex": "M"
+      },
+      "Item007": {
+        "Item": "Jacket",
+        "Price": "£45.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/736x/96/f8/e6/96f8e6109085f2a740b2b969a96b55e8.jpg",
+        "Size": "XS",
+        "Sex": "F"
+      },
+      "Item008": {
+        "Item": "Jacket",
+        "Price": "£29.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/564x/da/29/c3/da29c35df5f0bbb9cc106d795a87ceac.jpg",
+        "Size": "S",
+        "Sex": "F"
+      },
+      "Item009": {
+        "Item": "Shirt",
+        "Price": "£14.99",
+        "Image": "http://www.maxmayo.com/wp-content/uploads/2012/12/zara-floral-prints-shirt.jpg",
+        "Size": "M",
+        "Sex": "M"
+      },
+      "Item010": {
+        "Item": "Shirt",
+        "Price": "£19.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/236x/d3/68/54/d36854bcc79014fd4c8d46cbcde6d9e5.jpg",
+        "Size": "S",
+        "Sex": "M"
+      },
+      "Item011": {
+        "Item": "Shirt",
+        "Price": "£16.99",
+        "Image": "http://3.bp.blogspot.com/-5JKC5wbYeZI/VZWCLDmzv4I/AAAAAAAAzNA/gX7LyM9TKfQ/s1600/zara%2Bplaid%2Bshirt.jpg",
+        "Size": "XS",
+        "Sex": "F"
+      },
+      "Item012": {
+        "Item": "Shirt",
+        "Price": "£21.99",
+        "Image": "http://static.zara.net/photos///2017/V/0/1/p/6895/249/044/2/w/1024/6895249044_2_1_1.jpg?ts=1469198909177",
+        "Size": "S",
+        "Sex": "F"
+      },
+      "Item013": {
+        "Item": "T-Shirt",
+        "Price": "£5.99",
+        "Image": "http://static.zara.net/photos///2017/V/0/2/p/4770/410/800/2/w/560/4770410800_2_1_1.jpg?ts=1488477113782",
+        "Size": "XS",
+        "Sex": "M"
+      },
+      "Item014": {
+        "Item": "T-Shirt",
+        "Price": "£7.99",
+        "Image": "https://cdnd.lystit.com/photos/979d-2014/01/04/zara-black-micropunch-faux-leather-t-shirt-product-1-16537639-4-633587672-normal.jpeg",
+        "Size": "S",
+        "Sex": "M"
+      },
+      "Item015": {
+        "Item": "T-Shirt",
+        "Price": "£9.99",
+        "Image": "http://static.zara.net/photos///2016/I/0/1/p/1277/201/800/2/w/1024/1277201800_1_1_1.jpg?ts=1477301554391",
+        "Size": "XXS",
+        "Sex": "F"
+      },
+      "Item016": {
+        "Item": "T-Shirt",
+        "Price": "£12.99",
+        "Image": "http://static.zara.net/photos///2017/V/0/1/p/2513/020/620/2/w/1024/2513020620_1_1_1.jpg?ts=1484750322640",
+        "Size": "S",
+        "Sex": "F"
+      },
+      "Item017": {
+        "Item": "Shoes",
+        "Price": "£29.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/736x/f8/35/2a/f8352a943ecd81c0bbd076031d7f7570.jpg",
+        "Size": "7",
+        "Sex": "M"
+      },
+      "Item018": {
+        "Item": "Shoes",
+        "Price": "£39.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/736x/75/d9/c9/75d9c90cb77a7b0af14b555fbd58797d.jpg",
+        "Size": "8",
+        "Sex": "M"
+      },
+      "Item019": {
+        "Item": "Shoes",
+        "Price": "£39.99",
+        "Image": "http://www.thestunningpost.com/wordpress/wp-content/uploads/2013/03/Zara-Ankle-Strap-.jpg",
+        "Size": "4",
+        "Sex": "F"
+      },
+      "Item020": {
+        "Item": "Shoes",
+        "Price": "£34.99",
+        "Image": "http://picture-cdn.wheretoget.it/f4d9j7-i.jpg",
+        "Size": "5",
+        "Sex": "F"
+      }
+    },
+    "TopShop": {
+      "Item001": {
+        "Item": "Jeans",
+        "Price": "£29.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/736x/0a/0e/77/0a0e777baf97534383c9717403f83054.jpg",
+        "Size": "32W30L",
+        "Sex": "M"
+      },
+      "Item002": {
+        "Item": "Jeans",
+        "Price": "£19.99",
+        "Image": "http://nord.imgix.net/Zoom/13/_10340493.jpg",
+        "Size": "30W30L",
+        "Sex": "M"
+      },
+      "Item003": {
+        "Item": "Jeans",
+        "Price": "£23.99",
+        "Image": "http://media.topshop.com/wcsstore/TopShop/images/catalog/TS02H37JBLC_Zoom_F_1.jpg",
+        "Size": "2",
+        "Sex": "F"
+      },
+      "Item004": {
+        "Item": "Jeans",
+        "Price": "19.99",
+        "Image": "https://cdna.lystit.com/photos/2013/06/26/topshop-blue-moto-blue-baxter-jeans-product-1-11243103-530901269.jpeg",
+        "Size": "4",
+        "Sex": "F"
+      },
+      "Item005": {
+        "Item": "Jacket",
+        "Price": "£64.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/736x/23/a6/21/23a6214b52d92f73f454f3590f2b738f.jpg",
+        "Size": "S",
+        "Sex": "M"
+      },
+      "Item006": {
+        "Item": "Jacket",
+        "Price": "£75.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/736x/12/c4/94/12c49437bf4f1211b97dca04235bd80d.jpg",
+        "Size": "M",
+        "Sex": "M"
+      },
+      "Item007": {
+        "Item": "Jacket",
+        "Price": "£45.99",
+        "Image": "http://s3cdn-lookbooknu.netdna-ssl.com/files/looks/small/2012/09/26/2537859_hey.jpg?1348686919",
+        "Size": "XS",
+        "Sex": "F"
+      },
+      "Item008": {
+        "Item": "Jacket",
+        "Price": "£29.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/236x/77/9e/8a/779e8a7cec9446b5c3d0c221ae55b000.jpg",
+        "Size": "S",
+        "Sex": "F"
+      },
+      "Item009": {
+        "Item": "Shirt",
+        "Price": "£14.99",
+        "Image": "http://images.tommy.com/is/image/tommy/productlistingfront_04_08878A0785_416",
+        "Size": "M",
+        "Sex": "M"
+      },
+      "Item010": {
+        "Item": "Shirt",
+        "Price": "£19.99",
+        "Image": "http://images.asos-media.com/inv/media/5/1/4/9/6709415/burgundy/image1xl.jpg",
+        "Size": "S",
+        "Sex": "M"
+      },
+      "Item011": {
+        "Item": "Shirt",
+        "Price": "£14.99",
+        "Image": "http://img.allw.mn/content/www/2011/04/7-classic-striped-shirts/2_topshop-blue-stripe-ruched-cap-sleeve-shirt_7-classic-striped-shirts.jpg",
+        "Size": "XS",
+        "Sex": "F"
+      },
+      "Item012": {
+        "Item": "Shirt",
+        "Price": "£21.99",
+        "Image": "http://media.topshop.com/wcsstore/TopShop/images/catalog/TS13H14LBLE_3col_F_1.jpg",
+        "Size": "S",
+        "Sex": "F"
+      },
+      "Item013": {
+        "Item": "T-Shirt",
+        "Price": "£5.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/236x/ec/24/53/ec2453cbbfbcb7c0da18d0ef5e4d026c.jpg",
+        "Size": "XS",
+        "Sex": "M"
+      },
+      "Item014": {
+        "Item": "T-Shirt",
+        "Price": "£7.99",
+        "Image": "https://ae01.alicdn.com/kf/HTB1mz1KKXXXXXchXFXXq6xXFXXX8/-font-b-Topshop-b-font-DORK-letter-multicolor-cool-font-b-Mens-b-font-font.jpg",
+        "Size": "S",
+        "Sex": "M"
+      },
+      "Item015": {
+        "Item": "T-Shirt",
+        "Price": "£9.99",
+        "Image": "http://www.theadairgroup.com/images/Ladies-Fitted-T-Shirt-Black_large.jpg",
+        "Size": "XXS",
+        "Sex": "F"
+      },
+      "Item016": {
+        "Item": "T-Shirt",
+        "Price": "£12.99",
+        "Image": "https://ae01.alicdn.com/kf/HTB1vQYeJVXXXXbWXpXXq6xXFXXXH.jpg",
+        "Size": "S",
+        "Sex": "F"
+      },
+      "Item017": {
+        "Item": "Shoes",
+        "Price": "£29.99",
+        "Image": "http://www.pollypullar.co.uk/images/images/category_21/Shoes-6Y5H66O8.jpg",
+        "Size": "7",
+        "Sex": "M"
+      },
+      "Item018": {
+        "Item": "Shoes",
+        "Price": "£39.99",
+        "Image": "http://media.topman.com/wcsstore/TopMan/images/catalog/TM97L67MTAN_3col_F_1.jpg",
+        "Size": "8",
+        "Sex": "M"
+      },
+      "Item019": {
+        "Item": "Shoes",
+        "Price": "£39.99",
+        "Image": "http://media.topshop.com/wcsstore/TopShop/images/catalog/TS32S04JBLK_Zoom_B_1.jpg",
+        "Size": "4",
+        "Sex": "F"
+      },
+      "Item020": {
+        "Item": "Shoes",
+        "Price": "£34.99",
+        "Image": "https://s-media-cache-ak0.pinimg.com/originals/ae/ef/e7/aeefe7a7494109d7bd62932d00603f9c.jpg",
+        "Size": "5",
+        "Sex": "F"
+      }
+    }
+  }
+}

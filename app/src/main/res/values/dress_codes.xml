@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="spinner_message">What are you looking for?</string>
+
+    <string-array name="dress_codes">
+        <item>Jeans</item>
+        <item>Jackets</item>
+        <item>Shirts</item>
+        <item>Shoes</item>
+    </string-array>
+
+</resources>
