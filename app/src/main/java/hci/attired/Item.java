@@ -6,14 +6,23 @@ package hci.attired;
 
 class Item {
     private int id;
-    private String name, price, image, desc;
+    private String name, price, image, desc, shop_name;
 
-    public Item(int id, String name, String price, String image, String desc) {
+    public Item(int id, String name, String price, String image, String desc, String shop_name) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
         this.desc = desc;
+        this.shop_name = shop_name;
+    }
+
+    public String getShop_name() {
+        return shop_name;
+    }
+
+    public void setShop_name(String shop_name) {
+        this.shop_name = shop_name;
     }
 
     public int getId() {

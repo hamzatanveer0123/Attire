@@ -11,7 +11,9 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.internal.util.Predicate;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -33,9 +37,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,8 +64,11 @@ public class NearBy extends AppCompatActivity {
     private HashMap<String,String> store_ids = new HashMap<String,String>();
     int count=0;
 
-    //list of beacon_ids
+    //list of beacon_ids - delete
     private ArrayList<String> beacon_ids = new ArrayList<String>();
+
+    //new Design to remove data
+    private HashMap<String,Timers> beaconIds = new HashMap<String,Timers>();
 
 
 
@@ -196,22 +207,28 @@ public class NearBy extends AppCompatActivity {
                         Log.d(TAG,"Name of the BLE!!!!!! --> "+ name);
                         Log.d(TAG,"Address of the BLE!!!!!! --> "+ address);
 
-                        if (!beacon_ids.contains(address)){
-                            beacon_ids.add(address);
-                            if (store_ids.containsKey(address)) {
-                            try{
-                                parseXMLFile(store_ids.get(address));
-                                updateRecyclerView();
-                            }catch (XmlPullParserException e){
-                                e.printStackTrace();
-                            }catch (FileNotFoundException e){
-                                e.printStackTrace();
-                            }catch (IOException e){
-                                e.printStackTrace();
+                        if (store_ids.containsKey(address)){
+                            if (!beaconIds.containsKey(address)){
+                                beaconIds.put(address,new Timers(new Date()));
+                                try{
+                                    parseXMLFile(store_ids.get(address));
+                                    updateRecyclerView();
+                                }catch (XmlPullParserException e){
+                                    e.printStackTrace();
+                                }catch (FileNotFoundException e){
+                                    e.printStackTrace();
+                                }catch (IOException e){
+                                    e.printStackTrace();
+                                }
                             }
+                            else{
+                                beaconIds.get(address).setLastUpdate(new Date());
                             }
                         }
 
+
+                        //check for beacons who are now out of range to remove their content
+                        checkBeacons();
 
 
                         count++;
@@ -237,6 +254,30 @@ public class NearBy extends AppCompatActivity {
             Log.w(TAG, "ScanFailed(" + errorCode + ")");
         }
     };
+
+    private void checkBeacons() {
+        Iterator<String> keys = beaconIds.keySet().iterator();
+        while (keys.hasNext()){
+            String beaconID = keys.next();
+            long before = beaconIds.get(beaconID).getLastUpdate().getTime()/1000;
+            long after = new Date().getTime()/1000;
+            if (after - before > 10){
+                beaconIds.remove(beaconID);
+                remove_shops_content(store_ids.get(beaconID));
+            }
+
+        }
+    }
+
+    private void remove_shops_content(final String shop_name) {
+        for (int i=0; i<list.size(); i++){
+            if (list.get(i).getShop_name().compareTo(shop_name)==0){
+                list.remove(i);
+                i--;
+            }
+        }
+        updateRecyclerView();
+    }
 
 
     private class BeaconInfo {
@@ -367,7 +408,7 @@ public class NearBy extends AppCompatActivity {
                 }
 
                 if(name.compareTo(this.item) == 0) {
-                    Item data = new Item(i, name, amount, url, "Size: " + sSize + "\nPrice: " + amount + "\nShop: "+shop_name);
+                    Item data = new Item(i, name, amount, url, "Size: " + sSize + "\nPrice: " + amount + "\nShop: "+shop_name, shop_name);
                     list.add(data);
                 }
             }
@@ -375,4 +416,5 @@ public class NearBy extends AppCompatActivity {
         } catch (Exception e) {e.printStackTrace();}
 
     }
+
 }
