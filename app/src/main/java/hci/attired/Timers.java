@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Timers {
     private Date lastUpdate;
-    
+
     public Timers(Date last_Update){
         this.lastUpdate = last_Update;
     }

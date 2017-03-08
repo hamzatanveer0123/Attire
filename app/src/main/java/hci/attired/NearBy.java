@@ -11,7 +11,9 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,20 +25,25 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.internal.util.Predicate;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -89,8 +96,8 @@ public class NearBy extends AppCompatActivity {
         setContentView(R.layout.activity_near_by);
 
         //Set store_ids
-        store_ids.put("E1:20:1D:FC:88:D0","zara");
-        store_ids.put("00:07:80:C7:AF:7C","topshop");
+        store_ids.put("E1:20:1D:FC:88:D0","Zara");
+        store_ids.put("00:07:80:C7:AF:7C","Topshop");
 
 
         //=========================================================BLE======================================
@@ -248,18 +255,22 @@ public class NearBy extends AppCompatActivity {
         }
     };
 
-    private void checkBeacons() {
+    private synchronized void checkBeacons() {
+        HashMap<String, Timers> tempBeaconIds = new HashMap<String, Timers>();
+        tempBeaconIds.putAll(beaconIds);
         Iterator<String> keys = beaconIds.keySet().iterator();
         while (keys.hasNext()){
             String beaconID = keys.next();
             long before = beaconIds.get(beaconID).getLastUpdate().getTime()/1000;
             long after = new Date().getTime()/1000;
             if (after - before > 10){
-                beaconIds.remove(beaconID);
+                tempBeaconIds.remove(beaconID);
                 remove_shops_content(store_ids.get(beaconID));
             }
-
         }
+        //update list of beacons in radius
+        beaconIds.clear();
+        beaconIds.putAll(tempBeaconIds);
     }
 
     private void remove_shops_content(final String shop_name) {
