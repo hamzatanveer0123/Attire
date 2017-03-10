@@ -11,6 +11,7 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -159,8 +160,21 @@ public class NearBy extends AppCompatActivity {
                 search.setVisibility(View.INVISIBLE);
                 item = search.getText().toString();
                 Log.w(TAG, item);
-//                list = new ArrayList<>();
-//                updateRecyclerView();
+                list.clear();
+                Iterator<String> keys = beaconIds.keySet().iterator();
+                while (keys.hasNext()){
+                    String BeaconID = keys.next();
+                    try{
+                        parseXMLFile(store_ids.get(BeaconID));
+                        updateRecyclerView();
+                    }catch (XmlPullParserException e){
+                        e.printStackTrace();
+                    }catch (FileNotFoundException e){
+                        e.printStackTrace();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -206,7 +220,7 @@ public class NearBy extends AppCompatActivity {
         scanner.startScan(filters, settings, bleScanCallback);
         isScanning = true;
 
-        startService();
+        //startService();
 
     }
 
@@ -423,6 +437,7 @@ public class NearBy extends AppCompatActivity {
 
         boolean found = false;
 
+        Log.d(TAG,"Shope names ->>>>>>>>>>>>> "+shop_name);
         try {
             InputStream is = getAssets().open(shop_name+".xml");
 
