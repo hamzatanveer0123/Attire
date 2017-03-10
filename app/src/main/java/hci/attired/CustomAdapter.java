@@ -37,7 +37,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int index) {
         holder.textview.setText(list.get(index).getDesc());
-        Picasso.with(context).load(list.get(index).getImage()).resize(500, 500).centerCrop().into(holder.imageview);
+        Picasso.with(context).load(list.get(index).getImage()).placeholder(R.drawable.loader).resize(500, 500).centerCrop().into(holder.imageview);
     }
 
     @Override

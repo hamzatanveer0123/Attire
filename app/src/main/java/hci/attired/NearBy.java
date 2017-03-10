@@ -11,21 +11,24 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.internal.util.Predicate;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,17 +36,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -60,6 +60,10 @@ public class NearBy extends AppCompatActivity {
 
     private String item;
 
+    private static final String[] SHOPPINGLIST = new String[] {
+            "Jeans", "Jacket", "Shirt", "T-Shirt", "Shoes"
+    };
+
     //list of store id's
     private HashMap<String,String> store_ids = new HashMap<String,String>();
     int count=0;
@@ -69,8 +73,6 @@ public class NearBy extends AppCompatActivity {
 
     //new Design to remove data
     private HashMap<String,Timers> beaconIds = new HashMap<String,Timers>();
-
-
 
     //ble
     private BluetoothAdapter bleDev = null;
@@ -92,8 +94,87 @@ public class NearBy extends AppCompatActivity {
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.statsbar));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         setContentView(R.layout.activity_near_by);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        list         = new ArrayList<>();
+
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        adapter = new CustomAdapter(this, list);
+        recyclerView.setAdapter(adapter);
+
+        SharedPreferences prefs = getSharedPreferences(ATTIRE_STORAGE, MODE_PRIVATE);
+        item = prefs.getString("item1", "");
+
+        //ACTION BAR STUFF
+
+        android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+
+        ArrayAdapter<String> adapterAC = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line , SHOPPINGLIST);
+
+        final AutoCompleteTextView search = (AutoCompleteTextView) findViewById(R.id.shoppingListNearBy);
+        search.setAdapter(adapterAC);
+
+        ImageButton addItems = (ImageButton) findViewById(R.id.addItems);
+
+        TextView tv  = (TextView) findViewById(R.id.nearByText);
+
+        addItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv.setVisibility(View.INVISIBLE);
+                search.setVisibility(View.VISIBLE);
+                search.callOnClick();
+
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                search.showDropDown();
+            }
+        });
+
+        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                tv.setVisibility(View.VISIBLE);
+                search.setVisibility(View.INVISIBLE);
+                item = search.getText().toString();
+                Log.w(TAG, item);
+//                list = new ArrayList<>();
+//                updateRecyclerView();
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopService();
+                finish();
+            }
+        });
+
+
+        //BLUETOOTH STUFF
 
         //Set store_ids
         store_ids.put("E1:20:1D:FC:88:D0","Zara");
@@ -120,59 +201,53 @@ public class NearBy extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(this, "Starting BLE scan...", Toast.LENGTH_SHORT).show();
-
-        // clear old scan results
-//        scanAdapter.clear();
-
         List<ScanFilter> filters = new ArrayList<>();
         ScanSettings settings = new ScanSettings.Builder().setScanMode(scanMode).build();
         scanner.startScan(filters, settings, bleScanCallback);
         isScanning = true;
 
-
-
-
-
-
-
-
-        SharedPreferences prefs = getSharedPreferences(ATTIRE_STORAGE, MODE_PRIVATE);
-        item = prefs.getString("item1", "");
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        list         = new ArrayList<>();
-
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        adapter = new CustomAdapter(this, list);
-        recyclerView.setAdapter(adapter);
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        startService();
 
     }
 
+    public void startService() {
+        startService(new Intent(getBaseContext(), BLEService.class));
+    }
+
+    public void stopService() {
+        stopService(new Intent(getBaseContext(), BLEService.class));
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         // stop any in-progress scan and stop updating the graph if activity is paused
         stopScan();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        String scanning = "not scanning";
+        if(!isScanning){
+            scanning = "scanning";
+            isScanning = true;
+            beacon_ids.clear(); //clear all data retreived from beacons as user may be in a different location when restarting app
+            Log.i(TAG, "Scan started");
+            scanner.startScan(bleScanCallback);
+        }
+        Toast.makeText(this, "Resumed & " + scanning, Toast.LENGTH_SHORT).show();
+    }
+
     private void stopScan() {
         if(scanner != null && isScanning) {
-            Toast.makeText(this, "Stopping BLE scan...", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Stopping BLE scan...", Toast.LENGTH_SHORT).show();
             isScanning = false;
             beacon_ids.clear(); //clear all data retreived from beacons as user may be in a different location when restarting app
             Log.i(TAG, "Scan stopped");
@@ -344,16 +419,9 @@ public class NearBy extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
-
-
-
     private void parseXMLFile(String shop_name) throws XmlPullParserException, IOException {
+
+        boolean found = false;
 
         try {
             InputStream is = getAssets().open(shop_name+".xml");
@@ -412,13 +480,15 @@ public class NearBy extends AppCompatActivity {
                 }
 
                 if(name.compareTo(this.item) == 0) {
+                    found = true;
                     Item data = new Item(i, name, amount, url, "Size: " + sSize + "\nPrice: " + amount + "\nShop: "+shop_name, shop_name);
                     list.add(data);
                 }
             }
-
-        } catch (Exception e) {e.printStackTrace();}
-
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
