@@ -352,7 +352,7 @@ public class NearBy extends AppCompatActivity {
             String beaconID = keys.next();
             long before = beaconIds.get(beaconID).getLastUpdate().getTime()/1000;
             long after = new Date().getTime()/1000;
-            if (after - before > 10){
+            if (after - before > 5){
                 tempBeaconIds.remove(beaconID);
                 remove_shops_content(store_ids.get(beaconID));
             }
