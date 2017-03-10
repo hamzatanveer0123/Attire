@@ -11,7 +11,6 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -131,6 +130,15 @@ public class NearBy extends AppCompatActivity {
 
         TextView tv  = (TextView) findViewById(R.id.nearByText);
 
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv.setVisibility(View.INVISIBLE);
+                search.setVisibility(View.VISIBLE);
+                search.callOnClick();
+            }
+        });
+
         addItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,7 +228,7 @@ public class NearBy extends AppCompatActivity {
         scanner.startScan(filters, settings, bleScanCallback);
         isScanning = true;
 
-        //startService();
+        startService();
 
     }
 
